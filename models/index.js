@@ -15,20 +15,20 @@ Category.hasMany(Product, {
   foreignKey: 'category_id'
 })
 
-Product.belongToMany(Tag, {
+Product.belongsToMany(Tag, {
   through: {
     model: ProductTag,
     unique: false
   },
-  as: //NEEDS TO ADD ALIAS for when data is retrieved
+  as: 'tagged_products'
 });
 
-Tag.belongToMany(Product, {
+Tag.belongsToMany(Product, {
   through: {
     model: ProductTag,
     unique: false
   },
-  as: // NEED TO ADD ALIAS FOR WHEN DATA IS RETRIEVED
+  as: 'product_tags'
 })
 
 module.exports = {
