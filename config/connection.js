@@ -12,19 +12,6 @@ require('dotenv').config();
       },
     }); */
 
-    const sequelize = new Sequelize(
-    
-      'ecommerce_db',
-      // User
-      'root',
-      // Password
-      'Odinson!042920',
-      {
-        // Database location
-        host: 'localhost',
-        dialect: 'mysql',
-        port: 3306
-      }
-    );
+   
 
 module.exports = sequelize;
