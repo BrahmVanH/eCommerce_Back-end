@@ -3,18 +3,21 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 
 
 router.get('/', async (req, res) => {
+  console.log("Entering products route")
   try {
+    console.log("trying to create object thats awaiting product data")
     const productData = await Product.findAll({
       include: [
       { 
-        model: Product,
-        attributes: ['id', 'product_name', 'price', 'stock', 'category_id'],
+        model: Category,
+        attributes: ['id', 'category_name'],
       },
       {
         model: Tag,
         attributes: ['id', 'tag_name']}
        ]
     });
+    console.log("awaiting 'productData'")
     res.status(200).json(productData);
   } catch (err) {
     res.status(500).json(err);
