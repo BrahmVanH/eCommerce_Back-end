@@ -3,10 +3,13 @@ const { Category, Product } = require('../../models');
 
 // The `/api/categories` endpoint
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const categoryData = Category.findAll({
-      include: [{ model: Product }],
+      include: [{ model: Product,
+      attributes: ['id', 'product_name', 'price', 'stock', 'category_id'],
+       
+      }],
     });
     
     res.status(200).json(categoryData);
@@ -15,10 +18,12 @@ router.get('/', (req, res) => {
   }
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     const categoryData = Category.findByPk(req.params.id, {
-      include: [{ model: Category }, { model: Product }],
+      include: [{ model: Product,
+      attributes: ['id', 'product_name', 'price', 'stock', 'category_id'],
+      }],
     });
     
     if (!categoryData) {
@@ -32,11 +37,13 @@ router.get('/:id', (req, res) => {
   }
 });
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   // create a new category
   try {
-    const categoryData = Category.create({
-      category_name: req.body.category_name,
+    const categoryData = Category.create(req.body,{
+      where: {
+        id: req.params.id,
+      }
     });
     res.status(200).json(categoryData);
   } catch (err) {
@@ -46,25 +53,23 @@ router.post('/', (req, res) => {
 
 router.put('/:id', (req, res) => {
   try {
-    const categoryData = Category.update({
-      category_name: req.body.category_name 
-    },
-      { where: { id: req.body.id, }
-    }
-  );
+    const categoryData = Category.update(req.body, {
+      where: {
+        id: req.params.id,
+      },
+    }); 
+    
 
-  if (!categoryData) {
-    res.status(404).json({ message: 'No category found with that id.'});
-    return;
-  } 
+    if (!categoryData) {
+      res.status(404).json({ message: 'No category found with that id.'});
+      return;
+    } 
 
   res.status(200).json(categoryData);
   } catch (err) {
     res.status(500).json(err);
   }
 });
-
-
 
 
 router.delete('/:id', (req, res) => {
