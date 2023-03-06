@@ -3,6 +3,8 @@ const { Category, Product } = require('../../models');
 
 // The `/api/categories` endpoint
 
+// Used asynchronous functions for response time 
+
 router.get('/', async (req, res) => {
   try {
     const categoryData = await Category.findAll({

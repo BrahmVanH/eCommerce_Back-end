@@ -2,6 +2,8 @@ const router = require('express').Router();
 const { Tag, Product, ProductTag } = require('../../models');
 
 // The `/api/tags` endpoint
+// Used asynchronous functions for response time 
+
 
 router.get('/', async (req, res) => {
   try {

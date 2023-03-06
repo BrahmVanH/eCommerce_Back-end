@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { Product, Category, Tag, ProductTag } = require('../../models');
 
+// Used asynchronous functions for response time 
 
 router.get('/', async (req, res) => {
   console.log("Entering products route")
